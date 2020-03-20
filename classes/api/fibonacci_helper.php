@@ -31,9 +31,16 @@ class fibonacci_helper {
     private static $instance;
 
     /**
+     * @var array
+     */
+    private $memo;
+
+    /**
      * fibonacci_helper constructor.
      */
-    private function __construct() {}
+    private function __construct() {
+        $this->memo = [];
+    }
 
     /**
      * @return fibonacci_helper
@@ -59,6 +66,11 @@ class fibonacci_helper {
             return 1;
         }
 
-        return $this->calculate($n - 2) + $this->calculate($n - 1);
+        if (isset($this->memo[$n])) {
+            return $this->memo[$n];
+        }
+
+        $this->memo[$n] = $this->calculate($n - 2) + $this->calculate($n - 1);
+        return $this->memo[$n];
     }
 }
